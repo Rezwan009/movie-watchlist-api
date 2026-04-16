@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Watchlist API | Premium Documentation</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <meta name="description" content="Welcome to the Movie Watchlist API. Manage your favorite movies and personal watchlist with ease using our premium RESTful interface.">
+</head>
+<body>
+    <div class="background-radial"></div>
+    
+    <main class="glass-container">
+        <header>
+            <div class="logo">
+                <span class="icon">🎬</span>
+                <h1>Cine<span>Track</span> API</h1>
+            </div>
+            <p class="tagline">Next-generation Movie Watchlist Management</p>
+        </header>
+
+        <section class="hero-section">
+            <div class="hero-content">
+                <h2>Welcome to the Universe of Cinema</h2>
+                <p>A powerful, high-performance API designed for developers building the next generation of movie-tracking applications.</p>
+                <div class="cta-group">
+                    <a href="/api/v1/movies" class="btn btn-primary" id="btn-movies">Explore Movies</a>
+                    <a href="/api/v1/auth/login" class="btn btn-secondary" id="btn-auth">Authentication</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="endpoints">
+            <h3>Quick Start Endpoints</h3>
+            <div class="grid">
+                <div class="endpoint-card">
+                    <span class="method get">GET</span>
+                    <code>/api/v1/movies</code>
+                    <p>Fetch your curated list of movies.</p>
+                </div>
+                <div class="endpoint-card">
+                    <span class="method post">POST</span>
+                    <code>/api/v1/auth/register</code>
+                    <p>Join the community and start tracking.</p>
+                </div>
+                <div class="endpoint-card">
+                    <span class="method post">POST</span>
+                    <code>/api/v1/auth/login</code>
+                    <p>Access your personal watchlist safely.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 CineTrack API. Built for the lovers of big screens.</p>
+        </footer>
+    </main>
+
+    <script>
+        // Subtle move effect for glassmorphism
+        document.addEventListener('mousemove', (e) => {
+            const container = document.querySelector('.glass-container');
+            const { clientX, clientY } = e;
+            const x = (clientX / window.innerWidth - 0.5) * 10;
+            const y = (clientY / window.innerHeight - 0.5) * 10;
+            container.style.transform = `translate(${x}px, ${y}px)`;
+        });
+    </script>
+</body>
+</html>
