@@ -1,5 +1,5 @@
-import 'dotenv/config';
 import express from 'express';
+import 'dotenv/config';
 import { connectDB, disconnectDB } from './config/db.js'
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -32,7 +32,7 @@ app.use('/api/v1/auth', authRoutes);
 
 
 // Server start
-const PORT = 5001;
+const PORT = process.env.PORT || 5001;
 const server = app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`)
 });
