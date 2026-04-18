@@ -1,6 +1,11 @@
 import 'dotenv/config';
 import { prisma } from "../config/db.js";
 
+/**
+ * Add movie to watchlist
+ * Adds a movie to the watchlist for the authenticated user
+ * Requires protect middleware
+ */
 const addMovieToWatchlist = async (req, res) => {
 
     const { movieId, status, rating, notes } = req.body;
@@ -58,6 +63,11 @@ const addMovieToWatchlist = async (req, res) => {
     }
 }
 
+/**
+ * Get watchlist
+ * Returns all watchlist items for the authenticated user
+ * Requires protect middleware
+ */
 const getWatchlist = async (req, res) => {
     try {
         const watchlist = await prisma.watchlistItem.findMany({
@@ -78,6 +88,58 @@ const getWatchlist = async (req, res) => {
     }
 }
 
+/**
+ * Update watchlist item
+ * Updates status, rating, or notes
+ * Ensures only owner can update
+ * Requires protect middleware
+ */
+const updateWatchlistItem = async (req, res) => {
+    const { status, rating, notes } = req.body;
+
+    // Find watchlist item and verify ownership
+    const watchlistItem = await prisma.watchlistItem.findUnique({
+        where: { id: req.params.id },
+    });
+
+    if (!watchlistItem) {
+        return res.status(404).json({ error: "Watchlist item not found" });
+    }
+
+    // Ensure only owner can update
+    if (watchlistItem.userId !== req.user.id) {
+        return res
+            .status(403)
+            .json({ error: "Not allowed to update this watchlist item" });
+    }
+
+    // Build update data
+    const updateData = {};
+    if (status !== undefined) updateData.status = status.toUpperCase();
+    if (rating !== undefined) updateData.rating = rating;
+    if (notes !== undefined) updateData.notes = notes;
+
+    // Update watchlist item
+    const updatedItem = await prisma.watchlistItem.update({
+        where: { id: req.params.id },
+        data: updateData,
+    });
+
+    res.status(200).json({
+        success: true,
+        message: 'Watchlist item updated successfully',
+        data: {
+            watchlistItem: updatedItem,
+        },
+    });
+};
+
+/**
+ * Remove movie from watchlist
+ * Removes a movie from the watchlist for the authenticated user
+ * Ensures only owner can remove
+ * Requires protect middleware
+ */
 const removeMovieFromWatchlist = async (req, res) => {
     const { id } = req.params;
 
@@ -115,4 +177,4 @@ const removeMovieFromWatchlist = async (req, res) => {
     }
 }
 
-export { addMovieToWatchlist, getWatchlist, removeMovieFromWatchlist };
+export { addMovieToWatchlist, getWatchlist, updateWatchlistItem, removeMovieFromWatchlist };
