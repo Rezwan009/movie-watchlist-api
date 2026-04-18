@@ -10,6 +10,7 @@ const __dirname = path.dirname(__filename);
 // import routes
 import movieRoutes from './routes/movieRoutes.js'
 import authRoutes from './routes/authRoutes.js'
+import watchlistRoutes from './routes/watchlistRoutes.js'
 
 import cors from 'cors';
 
@@ -29,6 +30,7 @@ app.get('/', (req, res) => {
 })
 app.use('/api/v1/movies', movieRoutes);
 app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/watchlist', watchlistRoutes);
 
 
 // Server start
