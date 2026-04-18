@@ -13,6 +13,7 @@ import authRoutes from './routes/authRoutes.js'
 import watchlistRoutes from './routes/watchlistRoutes.js'
 
 import cors from 'cors';
+import { setUpSwagger } from './utils/swaggerUtils.js';
 
 connectDB();
 
@@ -24,13 +25,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Api routes
+// Swagger documentation
+setUpSwagger(app);
+
+// Healthcheck
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 })
-app.use('/api/v1/movies', movieRoutes);
-app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/watchlist', watchlistRoutes);
+app.use('/movies', movieRoutes);
+app.use('/auth', authRoutes);
+app.use('/watchlist', watchlistRoutes);
 
 
 // Server start
